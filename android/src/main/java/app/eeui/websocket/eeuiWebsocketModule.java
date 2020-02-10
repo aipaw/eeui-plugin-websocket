@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okio.ByteString;
 
-@WeexModule(name = "websocket")
+@WeexModule(name = "eeuiWebsocket")
 public class eeuiWebsocketModule extends WXModuleBase {
 
     private String TAG = "eeuiWebsocketModule";

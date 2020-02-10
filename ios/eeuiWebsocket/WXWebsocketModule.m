@@ -17,7 +17,7 @@
 
 @implementation WXWebsocketModule
 
-WX_PlUGIN_EXPORT_MODULE(websocket, WXWebsocketModule)
+WX_PlUGIN_EXPORT_MODULE(eeuiWebsocket, WXWebsocketModule)
 WX_EXPORT_METHOD(@selector(connect:callback:))
 WX_EXPORT_METHOD(@selector(send:))
 WX_EXPORT_METHOD(@selector(stop))

@@ -1,0 +1,6 @@
+{
+	"desc": "websocket 是一种创建持久性的连接，并进行双向数据传输的 HTTP 通信协议。",
+	"requireFormatName": "eeuiWebsocket",
+	"requireName": "eeui/websocket",
+	"title": "即时通讯"
+}
