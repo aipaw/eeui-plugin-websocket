@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.alibaba.weex.plugin.annotation.WeexModule;
-
 import app.eeui.framework.extend.base.WXModuleBase;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -24,6 +22,8 @@ public class eeuiWebsocketModule extends WXModuleBase {
     private String TAG = "eeuiWebsocketModule";
 
     private WsManager socket;
+
+    private boolean isConnect = false;
 
     @JSMethod
     public void connect(String url, final JSCallback callback) {
@@ -40,6 +40,7 @@ public class eeuiWebsocketModule extends WXModuleBase {
             @Override
             public void onOpen(Response response) {
                 super.onOpen(response);
+                isConnect = true;
                 Map<String, Object> data = new HashMap<>();
                 data.put("status", "open");
                 data.put("msg", "");
@@ -83,6 +84,7 @@ public class eeuiWebsocketModule extends WXModuleBase {
             @Override
             public void onClosed(int code, String reason) {
                 super.onClosed(code, reason);
+                isConnect = false;
                 JSONObject resMsg = new JSONObject();
                 resMsg.put("code", code);
                 resMsg.put("reason", reason);
@@ -98,6 +100,7 @@ public class eeuiWebsocketModule extends WXModuleBase {
             @Override
             public void onFailure(Throwable t, Response response) {
                 super.onFailure(t, response);
+                isConnect = false;
                 Map<String, Object> data = new HashMap<>();
                 data.put("status", "failure");
                 data.put("msg", t.getMessage());
@@ -109,6 +112,7 @@ public class eeuiWebsocketModule extends WXModuleBase {
         try {
             socket.startConnect();
         } catch (Exception e) {
+            isConnect = false;
             Map<String, Object> data = new HashMap<>();
             data.put("status", "error");
             data.put("msg", e.getMessage());
@@ -148,7 +152,7 @@ public class eeuiWebsocketModule extends WXModuleBase {
         if (socket == null) {
             return 0;
         }
-        if (socket.getCurrentStatus() == WsStatus.CONNECTED) {
+        if (socket.getCurrentStatus() == WsStatus.CONNECTED && isConnect) {
             return 1;
         }
         return 0;

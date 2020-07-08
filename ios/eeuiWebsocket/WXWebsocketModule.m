@@ -41,6 +41,9 @@ WX_EXPORT_METHOD_SYNC(@selector(state))
     if (self.socket == nil) {
         return;
     }
+    if (self.socket.readyState != SR_OPEN) {
+        return; 
+    }
     [self.socket send:msg];
 }
 
